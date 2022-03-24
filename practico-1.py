@@ -14,7 +14,7 @@ def mostrarMensajeFracaso():
     
 def mostrarMensajePerdiste():
     print('**********************')
-    print('* ¡¡¡Mala Suertes!!! *')
+    print('* ¡¡¡Mala Suerte!!! *')
     print('* ¡¡¡Haz perdido!!!  *')
     print('**********************')
 
