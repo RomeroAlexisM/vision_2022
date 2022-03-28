@@ -1,7 +1,7 @@
 import cv2 as cv
 
 def obtenerImagen():
-    return cv.imread('imagen.png')
+    return cv.imread('imagen.png', 0)
 
 def aplicarUmbral(imagen):
     imagen[imagen>210] = 255
