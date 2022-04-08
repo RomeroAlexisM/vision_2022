@@ -3,7 +3,7 @@ import cv2 as cv
 def capturarVideo():
     return cv.VideoCapture('video.mp4')
 
-def obtenerMilisegundos(cap):
+def obtenerfps(cap):
     fps = cap.get(cv.CAP_PROP_FPS)
     milisegundos = int(round((1/fps)*1000, 0))
     return milisegundos
@@ -18,7 +18,7 @@ def mostrarVideo(cap):
         if not ret:
             break
         cv.imshow('frame', frame)
-        if((cv.waitKey(obtenerMilisegundos(cap)) & 0xFF) == ord('q')) :
+        if((cv.waitKey(obtenerfps(cap)) & 0xFF) == ord('q')) :
             break
 
 def iniciar():
