@@ -7,7 +7,7 @@ def obtenerfps(cap):
 
 def configurarVideoDeSalida(cap, width, height):
     fourcc = cv.VideoWriter_fourcc('X', 'V', 'I', 'D')
-    out = cv.VideoWriter('output.avi', fourcc, 20.0, (width, height))
+    out = cv.VideoWriter('output.avi', fourcc, obtenerfps(cap), (width, height))
     return out
 
 def capturarVideo():
