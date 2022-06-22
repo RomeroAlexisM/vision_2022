@@ -6,12 +6,12 @@ def getImage(imgName):
     imgReaded = cv2.imread(imgName)
     return cv2.resize(imgReaded,(800, 600), interpolation=cv2.INTER_CUBIC)
 
-def getRatioFromReference():
-    global ratio, referenceWidthPx, euclideanDistanceReference
-    referenceWidthPx = selectedPoints[1][0] - selectedPoints[0][0]
+def getRatioFromReference(FIRST_POINT, SECOND_POINT, THIRD_POINT, FOURTH_POINT):
+    global ratio, euclideanDistanceReference 
+    referenceWidthPx = SECOND_POINT[0] - FIRST_POINT[0]
     
     euclideanDistanceReference = math.sqrt(math.pow(referenceWidthPx, 2) + 
-                            math.pow(selectedPoints[1][1] - selectedPoints[0][1], 2))
+                            math.pow(FOURTH_POINT[1] - THIRD_POINT[1], 2))
     
     return referenceWidthPx / euclideanDistanceReference
 
@@ -61,7 +61,7 @@ def writeMeasurement(distance):
 
 def closeWindows():
     cv2.destroyAllWindows()
-        
+
 def drawDot(event, x, y, flags, param):
     global firstImgCopy
 
@@ -76,38 +76,28 @@ def appendNewPoint(point):
 
 def init():
     global firstImgCopy, firstImg, counter, selectedPoints, ratio
-    cv2.namedWindow(winname= "Tomar referencias de la imagen")
-    cv2.setMouseCallback("Tomar referencias de la imagen", drawDot)
+   
+    #Puntos de referencia
+    FIRST_POINT = [155, 142]
+    SECOND_POINT = [401, 139]
+    THIRD_POINT = [396, 460]
+    FOURTH_POINT = [160, 438]  
 
-    while counter != 4:
-        cv2.imshow("Tomar referencias de la imagen", firstImgCopy)
-        key = cv2.waitKey(1) & 0xFF
-        if key == 27:
-            closeWindows()
-            break
-        elif key == ord('r'):
-            firstImgCopy = firstImg.copy()
-            
-    ratio = getRatioFromReference()      
+    ratio = getRatioFromReference(FIRST_POINT, SECOND_POINT, THIRD_POINT, FOURTH_POINT)      
     counter = 0
-    firstImgCopy = firstImg.copy()
     selectedPoints = []
     getMeasurement()
     
 
-#alto y ancho de la ventana en metros
+#Referencia alto y ancho de la ventana en metros
 REFERENCE_WIDTH_METERS = 1.24
 REFERENCE_HEIGHT_METERS = 1.52
 
 euclideanDistanceReference = 0
-referenceWidthPx = 0
-referenceHeightPx = 0
 ratio = 0
 firstImg = getImage("img1.jpeg")
 firstImgCopy = firstImg.copy()
 counter = 0
-rows, cols, ch = firstImgCopy.shape
-selectedPoints = []
 
 init()
 
